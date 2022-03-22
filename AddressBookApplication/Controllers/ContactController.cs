@@ -16,6 +16,7 @@ namespace AddressBookApplication.Controllers
 
         public ActionResult Details(int id)
         {
+           
             return View(ci.GetContact().Find(itemmodel => itemmodel.Id == id));
         }
 
@@ -32,7 +33,7 @@ namespace AddressBookApplication.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (ci.InsertContact(contact))
+                    if (ci.CreateContact(contact))
                     {
                         ViewBag.message = "Record Saved SuccesFully !";
                         ModelState.Clear();
@@ -56,7 +57,7 @@ namespace AddressBookApplication.Controllers
         {
             try
             {
-                ci.EditContact(updateContact);
+              var boolvalue=  ci.EditContact(updateContact);
 
                 return RedirectToAction("Index");
             }

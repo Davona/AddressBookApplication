@@ -34,32 +34,12 @@ namespace AddressBookApplication.Models
             }
             return contacts;
         }
-        public bool InsertContact(ContactModel contactInsert) 
+        public bool CreateContact(ContactModel createContact)
         {
             string mainconn = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(mainconn);
-            string sqlquery = "insert into contact (PhoneNumber,FullName,EmailAddress,PhysicalAddress) values ('"+ contactInsert.PhoneNumber + "','" + contactInsert.FullName + "','" + contactInsert.EmailAddress + "','" + contactInsert.PhysicalAddress + "')";
+            string sqlquery = "insert into contact (PhoneNumber,FullName,EmailAddress,PhysicalAddress) values ('" + createContact.PhoneNumber + "','" + createContact.FullName + "','" + createContact.EmailAddress + "','" + createContact.PhysicalAddress + "')";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlConnection.Open();
-            int count = mySqlCommand.ExecuteNonQuery();
-            mySqlConnection.Close();
-            if (count>1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-        public bool EditContact(ContactModel editcontact) 
-        {
-            string mainconn = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
-            MySqlConnection mySqlConnection = new MySqlConnection(mainconn);
-            string sqlquery = " update contact set  PhoneNumber = '" + editcontact.PhoneNumber +"',FullName ='"+editcontact.FullName+ "',EmailAddress ='"+editcontact.EmailAddress+"',PhysicalAddress ='"+editcontact.PhysicalAddress+"' where Id='" + editcontact.Id + "'";
-            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            
             mySqlConnection.Open();
             int count = mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
@@ -73,7 +53,27 @@ namespace AddressBookApplication.Models
             }
 
         }
-        public bool DeleteContact(int id) 
+        public bool EditContact(ContactModel editcontact)
+        {
+            string mainconn = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(mainconn);
+            string sqlquery = " update contact set  PhoneNumber = '" + editcontact.PhoneNumber + "',FullName ='" + editcontact.FullName + "',EmailAddress ='" + editcontact.EmailAddress + "',PhysicalAddress ='" + editcontact.PhysicalAddress + "' where Id='" + editcontact.Id + "'";
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+
+            mySqlConnection.Open();
+            int count = mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+            if (count > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public bool DeleteContact(int id)
         {
             string mainconn = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(mainconn);
